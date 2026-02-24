@@ -1,0 +1,156 @@
+{
+  "description": "Evaluation dataset for TaxGPT chatbot accuracy testing",
+  "version": "1.0",
+  "questions": [
+    {
+      "id": "struct_01",
+      "category": "structured_aggregation",
+      "question": "What is the total tax owed by all corporations in the dataset?",
+      "expected_approach": "structured",
+      "validation_hints": [
+        "Should query CSV data filtering by Taxpayer Type = Corporation",
+        "Should return a sum of Tax Owed column"
+      ]
+    },
+    {
+      "id": "struct_02",
+      "category": "structured_aggregation",
+      "question": "How many individual taxpayers are there in California?",
+      "expected_approach": "structured",
+      "validation_hints": [
+        "Should filter by Taxpayer Type = Individual AND State = CA",
+        "Should return a count"
+      ]
+    },
+    {
+      "id": "struct_03",
+      "category": "structured_comparison",
+      "question": "Compare the average income between partnerships and trusts.",
+      "expected_approach": "structured",
+      "validation_hints": [
+        "Should compute average income for each taxpayer type",
+        "Should present both values for comparison"
+      ]
+    },
+    {
+      "id": "struct_04",
+      "category": "structured_aggregation",
+      "question": "What is the average tax rate for non-profit organizations?",
+      "expected_approach": "structured",
+      "validation_hints": [
+        "Should filter by Taxpayer Type = Non-Profit",
+        "Should compute mean of Tax Rate column"
+      ]
+    },
+    {
+      "id": "struct_05",
+      "category": "structured_ranking",
+      "question": "Which state has the highest total tax owed?",
+      "expected_approach": "structured",
+      "validation_hints": [
+        "Should group by State and sum Tax Owed",
+        "Should identify the state with the maximum total"
+      ]
+    },
+    {
+      "id": "unstruct_01",
+      "category": "tax_rules",
+      "question": "What is the standard deduction amount for a single filer?",
+      "expected_approach": "unstructured",
+      "validation_hints": [
+        "Should retrieve from IRS Form 1040 instructions",
+        "Answer should cite the document source"
+      ]
+    },
+    {
+      "id": "unstruct_02",
+      "category": "tax_rules",
+      "question": "What are the filing requirements for head of household?",
+      "expected_approach": "unstructured",
+      "validation_hints": [
+        "Should retrieve from i1040gi.pdf",
+        "Should explain marital status and dependent requirements"
+      ]
+    },
+    {
+      "id": "unstruct_03",
+      "category": "tax_code",
+      "question": "What does Section 179 of the tax code allow?",
+      "expected_approach": "unstructured",
+      "validation_hints": [
+        "Should retrieve from usc26 document",
+        "Should mention expensing of depreciable business assets"
+      ]
+    },
+    {
+      "id": "unstruct_04",
+      "category": "concepts",
+      "question": "What is the difference between standard and itemized deductions?",
+      "expected_approach": "unstructured",
+      "validation_hints": [
+        "Should explain both types of deductions",
+        "May cite both IRS instructions and presentation"
+      ]
+    },
+    {
+      "id": "hybrid_01",
+      "category": "hybrid",
+      "question": "What deductions do individual taxpayers in Texas commonly claim, and what does the tax code say about business expenses?",
+      "expected_approach": "hybrid",
+      "validation_hints": [
+        "Should combine CSV data (deduction types for Individuals in TX)",
+        "Should also retrieve tax code content about business expenses"
+      ]
+    },
+    {
+      "id": "hybrid_02",
+      "category": "hybrid",
+      "question": "What is the average income for corporations with capital gains, and how are capital gains taxed?",
+      "expected_approach": "hybrid",
+      "validation_hints": [
+        "Should compute average income from CSV where Income Source = Capital Gains and Taxpayer Type = Corporation",
+        "Should also retrieve information about capital gains taxation from documents"
+      ]
+    },
+    {
+      "id": "graph_01",
+      "category": "relationship",
+      "question": "What income sources are associated with partnerships?",
+      "expected_approach": "graph",
+      "validation_hints": [
+        "Should traverse knowledge graph from Partnership node",
+        "Should list all connected IncomeSource nodes"
+      ]
+    },
+    {
+      "id": "graph_02",
+      "category": "relationship",
+      "question": "Which states have trust taxpayers and what are their typical deductions?",
+      "expected_approach": "graph",
+      "validation_hints": [
+        "Should traverse graph from Trust to connected States",
+        "Should also find connected DeductionType nodes"
+      ]
+    },
+    {
+      "id": "complex_01",
+      "category": "multi_step",
+      "question": "For the top 3 states by total tax owed, what is the breakdown by taxpayer type?",
+      "expected_approach": "structured",
+      "validation_hints": [
+        "Should first identify top 3 states by total Tax Owed",
+        "Then break down Tax Owed by Taxpayer Type within each state"
+      ]
+    },
+    {
+      "id": "complex_02",
+      "category": "multi_step",
+      "question": "What tax year had the most partnership filings, and what was the primary income source?",
+      "expected_approach": "structured",
+      "validation_hints": [
+        "Should count Partnership records by Tax Year",
+        "Then find the most common Income Source for that year"
+      ]
+    }
+  ]
+}
